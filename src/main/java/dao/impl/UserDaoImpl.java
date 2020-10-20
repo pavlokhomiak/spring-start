@@ -2,6 +2,7 @@ package dao.impl;
 
 import dao.UserDao;
 import java.util.List;
+import java.util.Optional;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -42,6 +43,13 @@ public class UserDaoImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User", User.class);
             return query.getResultList();
+        }
+    }
+
+    public Optional<User> getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from User u where u.id = :id")
+                    .setParameter("id", id).uniqueResultOptional();
         }
     }
 }
