@@ -13,7 +13,6 @@ import service.UserService;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-
     private final UserService userService;
 
     public UserController(UserService userService) {
