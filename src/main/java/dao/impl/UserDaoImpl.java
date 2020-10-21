@@ -2,6 +2,7 @@ package dao.impl;
 
 import dao.UserDao;
 import java.util.List;
+import java.util.Optional;
 import model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-
     private SessionFactory sessionFactory;
 
     public UserDaoImpl(SessionFactory sessionFactory) {
@@ -42,6 +42,12 @@ public class UserDaoImpl implements UserDao {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User", User.class);
             return query.getResultList();
+        }
+    }
+
+    public Optional<User> getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            return Optional.of(session.get(User.class, id));
         }
     }
 }
