@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-
     private SessionFactory sessionFactory;
 
     public UserDaoImpl(SessionFactory sessionFactory) {
@@ -48,8 +47,7 @@ public class UserDaoImpl implements UserDao {
 
     public Optional<User> getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from User u where u.id = :id")
-                    .setParameter("id", id).uniqueResultOptional();
+            return Optional.of(session.get(User.class, id));
         }
     }
 }
